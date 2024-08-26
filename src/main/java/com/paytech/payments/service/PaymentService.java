@@ -28,6 +28,8 @@ public class PaymentService {
     @Value("${payment.api.request.token}")
     private String paymentRequestToken;
 
+    private static final Customer DEFAULT_CUSTOMER = new Customer();
+
     public String pay(BigDecimal amount, String currency) throws PaymentException {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + paymentRequestToken);
@@ -36,13 +38,14 @@ public class PaymentService {
         PaymentRequestData requestData = PaymentRequestData.builder()
                 .amount(amount)
                 .currency(currency)
-                .customer(new Customer())
+                .customer(DEFAULT_CUSTOMER)
                 .build();
         HttpEntity<PaymentRequestData> entity = new HttpEntity<>(requestData, headers);
 
         try {
-            ResponseEntity<PaymentResponseData> response = restTemplate.exchange(paymentUrl, HttpMethod.POST, entity, PaymentResponseData.class);
-            System.out.println(response.getBody());
+            ResponseEntity<PaymentResponseData> response = restTemplate
+                    .exchange(paymentUrl, HttpMethod.POST, entity, PaymentResponseData.class);
+
             return response.getBody().getResult().getRedirectUrl();
         } catch (HttpClientErrorException e) {
             throw new PaymentException(e.getMessage());

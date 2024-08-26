@@ -6,7 +6,7 @@
     <link href="https://getbootstrap.com/docs/4.0/examples/signin/signin.css" rel="stylesheet" crossorigin="anonymous"/>
 </head>
 <body class="container">
-    <form method="post" action="/">
+    <form method="post" action="/payment">
         <div class="row">
             <div class="col-auto">
                 <h2 class="form-signin-heading" style="margin-top: 40px">Оплата</h2>

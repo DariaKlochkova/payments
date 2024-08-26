@@ -22,7 +22,7 @@ public class PaymentController {
         return "index";
     }
 
-    @PostMapping("/")
+    @PostMapping("/payment")
     public String pay(@RequestParam BigDecimal amount,
                       @RequestParam String currency,
                       Model model) {
